@@ -1,0 +1,56 @@
+<div>
+  <form #form="ngForm" (submit)="done()" >
+    <fieldset>
+      <legend>Informations generales</legend>
+
+      <label>nom</label>
+      <input required type="text" name="nom" ngModel #nom="ngModel">
+
+      <div *ngIf="nom.invalid && nom.touched">
+        nom obligatoire
+      </div>
+
+      <label>email</label>
+      <input required type="text" name="email" ngModel #email='ngModel'
+             pattern="[a-zA-z0-9]+.[a-zA-z0-9]+@[a-zA-z0-9]{3,}">
+
+      <div *ngIf="email.invalid && email.touched">
+        <div *ngIf="email.errors!['required']">email obligatoire</div>
+        <div *ngIf="email.errors!['pattern']">email non valide</div>
+      </div>
+
+      <fieldset>
+        <legend>Information de payement</legend>
+
+        <label>type de carte</label>
+        <input required type="text" name="type" ngModel #type='ngModel'>
+
+        <div *ngIf="type.invalid && type.touched">
+          type de carte obligatoire
+        </div>
+
+        <label>numero carte</label>
+        <input required pattern="[0-9]{16}" type="text" name="numero"
+               ngModel #numero='ngModel'>
+
+        <div *ngIf="numero.invalid && numero.touched">
+          <div *ngIf="numero.errors!['required']">numero obligatoire</div>
+          <div *ngIf="numero.errors!['pattern']">numero non valide</div>
+        </div>
+
+        <label>date expiration</label>
+        <input required type="text" name="date" ngModel #date='ngModel'>
+
+        <div *ngIf="date.invalid && date.touched">
+          date exp carte obligatoire
+        </div>
+
+        <label>code</label>
+        <input type="password" name="code" [disabled]="numero.invalid || type.invalid || date.invalid">
+      </fieldset>
+      <button type="submit" [disabled]="form.invalid">
+        ajouter
+      </button>
+    </fieldset>
+  </form>
+</div>
